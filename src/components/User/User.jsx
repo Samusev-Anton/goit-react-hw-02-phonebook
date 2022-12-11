@@ -1,19 +1,23 @@
 import React from 'react';
 import { nanoid } from 'nanoid';
+import { UserList, UserName } from './User.styled';
+// let id = nanoid();
 
-// const id = nanoid();
-// console.log(id);
-
-const User = ({ events }) => {
-  //   console.log(events);
+const User = ({ filter, onDeleteItem }) => {
+  console.log(filter);
   return (
-    <ul>
-      {events.map(({ name, number }) => (
-        <li key={nanoid()}>
-          {name}:{number}
-        </li>
+    <UserList>
+      {filter.map(({ name, number }, id = nanoid()) => (
+        <UserName key={id}>
+          <span>
+            {name}:{number}
+          </span>
+          <button type="button" onClick={() => onDeleteItem(id)}>
+            Delete
+          </button>
+        </UserName>
       ))}
-    </ul>
+    </UserList>
   );
 };
 

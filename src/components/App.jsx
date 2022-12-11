@@ -5,24 +5,67 @@ import { Filter } from './Filter/Filter';
 export class App extends React.Component {
   state = {
     contacts: [],
-  };
-  formSubmitHandler = data => {
-    this.setState({ contacts: [...this.state.contacts, data] });
-    // setTimeout(console.log(data), 1000);
+    filter: '',
   };
 
-  addItem = () => {
-    this.setState({ contacts: [...this.state.contacts, this.state.name] });
+  formSubmitHandler = data => {
+    const checkContact = this.state.contacts.some(
+      contact => contact.name.toLowerCase() === data.name.toLowerCase()
+    );
+
+    return checkContact
+      ? alert('такое имя уже есть')
+      : this.setState({ contacts: [...this.state.contacts, data] });
+  };
+
+  hendlerFilterChange = inputSearch => {
+    // console.log(inputSearch);
+    this.setState({ filter: inputSearch });
+    // console.log(this.state.filter);
+    this.filteredName();
+  };
+
+  filteredName = () => {
+    const { contacts, filter } = this.state;
+    // console.log(contacts);
+    const filterName = contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+    return filterName;
+  };
+
+  deleteitem = id => {
+    console.log(id);
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== id),
+    }));
   };
 
   render() {
+    console.log(this.state.contacts);
     return (
-      <div>
-        <h1>Phonebook</h1>
+      <div
+        style={{
+          width: '500px',
+          padding: '20px',
+          margin: '0 auto',
+          justifyContent: 'center',
+          alignItems: 'center',
+          fontSize: 20,
+          border: '2px solid #082911',
+          borderRadius: '4px',
+          backgroundColor: '#ebdeec',
+        }}
+      >
+        <h1 style={{ textAlign: 'center' }}>Phonebook</h1>
         <Form onSubmit={this.formSubmitHandler} />
-        <h2>Contacts</h2>
-        <User events={this.state.contacts} />
-        <Filter />
+        <h2 style={{ textAlign: 'center' }}>Contacts</h2>
+        <User
+          events={this.state.contacts}
+          filter={this.filteredName()}
+          onDeleteItem={this.deleteitem}
+        />
+        <Filter onInput={this.hendlerFilterChange} />
       </div>
     );
   }

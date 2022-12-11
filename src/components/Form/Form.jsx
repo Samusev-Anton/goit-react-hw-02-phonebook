@@ -1,5 +1,5 @@
 import React from 'react';
-// import User from 'components/User/User';
+import { InputStyle, Submit } from './Form.styled';
 
 class Form extends React.Component {
   state = {
@@ -8,12 +8,13 @@ class Form extends React.Component {
   };
 
   handleInputChange = event => {
-    console.log(event);
+    // console.log(event);
     this.setState({ [event.currentTarget.name]: event.currentTarget.value });
   };
 
   handleSubmit = event => {
     event.preventDefault();
+
     this.props.onSubmit(this.state);
 
     this.reset();
@@ -27,7 +28,7 @@ class Form extends React.Component {
     return (
       <>
         <form onSubmit={this.handleSubmit}>
-          <label htmlFor="">
+          <InputStyle htmlFor="">
             Name
             <input
               type="text"
@@ -38,8 +39,8 @@ class Form extends React.Component {
               required
               onChange={this.handleInputChange}
             />
-          </label>
-          <label htmlFor="">
+          </InputStyle>
+          <InputStyle htmlFor="">
             Number
             <input
               type="tel"
@@ -50,9 +51,9 @@ class Form extends React.Component {
               required
               onChange={this.handleInputChange}
             />
-          </label>
+          </InputStyle>
 
-          <button type="submit">Add contacts</button>
+          <Submit type="submit">Add contacts</Submit>
         </form>
       </>
     );

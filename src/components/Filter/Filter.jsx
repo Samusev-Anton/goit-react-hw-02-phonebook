@@ -1,4 +1,5 @@
 import React from 'react';
+import { InputStyle } from './Filter.styled';
 
 export class Filter extends React.Component {
   state = {
@@ -7,12 +8,13 @@ export class Filter extends React.Component {
 
   handleInputChange = event => {
     this.setState({ input: event.currentTarget.value });
+    this.props.onInput(event.currentTarget.value);
   };
 
   render() {
     return (
-      <label htmlFor="">
-        Name
+      <InputStyle htmlFor="">
+        Filter
         <input
           type="text"
           value={this.state.input}
@@ -22,7 +24,7 @@ export class Filter extends React.Component {
           required
           onChange={this.handleInputChange}
         />
-      </label>
+      </InputStyle>
     );
   }
 }
