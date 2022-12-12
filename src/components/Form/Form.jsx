@@ -1,5 +1,6 @@
 import React from 'react';
 import { InputStyle, Submit } from './Form.styled';
+import { nanoid } from 'nanoid';
 
 class Form extends React.Component {
   state = {
@@ -14,8 +15,13 @@ class Form extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    const contact = {
+      id: nanoid(),
+      name: this.state.name,
+      number: this.state.number,
+    };
 
-    this.props.onSubmit(this.state);
+    this.props.onSubmit(contact);
 
     this.reset();
   };
